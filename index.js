@@ -22,6 +22,45 @@ const items = [
     new Item("D3", "Trail Mix", 5.50, 13)
 ];
 
+//!CREATING AND ADDING HEADER
+const h1 = document.createElement("h1");
+document.body.appendChild(h1);
+h1.textContent = "Vending Machine";
+
+const borderStyle = "1px solid black";
+
+// @!CREATING AND ADDING TABLES TO THE PAGE
+//creating and appending table to body
+const table = document.createElement("table");
+document.body.appendChild(table);
+table.style.border = borderStyle;
+
+//creating and appending table head to table;
+const thead = document.createElement("thead");
+table.appendChild(thead);
+
+//creating and appending table row to table
+const tr = document.createElement("tr");
+thead.appendChild(tr);
+
+//creating and appending 4 tables cells to the row
+
+const tableHeaders = ["Item Code", "Item Name", "Item Price", "Quantity In Stock"];
+
+for (let index = 0; index < tableHeaders.length; index++) {
+    const td = document.createElement("td"); //creating a cell
+    tr.appendChild(td); //adding a cell to the row
+    td.style.border = borderStyle; //adding a border to the cell
+    td.textContent = tableHeaders[index]; //adding the correct header name to the cell
+};
+
+
+
+
+
+
+
+
 
 
 
