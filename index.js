@@ -52,7 +52,7 @@ table.appendChild(tbody);
 
 //items list that contains objects from "Items" class
 const items = [
-    new Item("A1", "Chips", 3.00, 5),
+    new Item("A1", "chips", 3.00, 5),
     new Item("A2", "Pretzels", 5.00, 8),
     new Item("A3", "Biscuits", 6.00, 6),
     new Item("B1", "Energy Bar", 9.00, 10),
@@ -79,6 +79,70 @@ items.forEach((item) => {
         addBorderToElem(td);//add border to cell
     }
 });
+
+//@!USER INPUT
+
+
+const button = document.createElement("button");
+document.body.appendChild(button);
+button.innerText = "Get food";
+
+
+/*
+Ask the user for what they want 
+Check each item object in the list
+if the user request is in there, send them a payment prompt
+else, display the prompt again 
+
+
+WHILE requestValid = false:
+    userInput = prompt("")
+
+    for
+
+    
+
+*/
+
+//*(F) asking for and verifying item code 
+
+
+button.onclick = verifyItemCode;
+
+
+function verifyItemCode() {
+    let requestValid = false;
+
+    while (!requestValid) {
+        let userInput = prompt("Enter the ITEM CODE of what you would like to have").toUpperCase();
+
+        for (let item of items) {
+            if (Object.values(item).includes(userInput)) {
+                console.log("in there");
+                requestValid = true;
+                break;
+            } else {
+                alert("Item invalid. Try again.");
+                break;
+            }
+        };
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
