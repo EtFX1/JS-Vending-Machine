@@ -37,7 +37,7 @@ const trHead = document.createElement("tr");
 thead.appendChild(trHead);
 
 //creating table headers
-const tableHeaders = ["Item Code", "Item Name", "Item Price", "Quantity In Stock"];
+const tableHeaders = ["Item Code", "Item Name", "Item Price (£)", "Quantity In Stock"];
 
 for (let index = 0; index < tableHeaders.length; index++) {
     const td = document.createElement("td"); //creating a cell
@@ -52,7 +52,7 @@ table.appendChild(tbody);
 
 //items list that contains objects from "Items" class
 const items = [
-    new Item("A1", "chips", 3.00, 5),
+    new Item("A1", "Chips", 3.00, 5),
     new Item("A2", "Pretzels", 5.00, 8),
     new Item("A3", "Biscuits", 6.00, 6),
     new Item("B1", "Energy Bar", 9.00, 10),
@@ -80,7 +80,7 @@ items.forEach((item) => {
     }
 });
 
-//@!USER INPUT
+//@!USER INPUT FOR FOOD THEY WANT
 
 
 const button = document.createElement("button");
@@ -88,46 +88,128 @@ document.body.appendChild(button);
 button.innerText = "Get food";
 
 
-/*
-Ask the user for what they want 
-Check each item object in the list
-if the user request is in there, send them a payment prompt
-else, display the prompt again 
-
-
-WHILE requestValid = false:
-    userInput = prompt("")
-
-    for
-
-    
-
-*/
-
-//*(F) asking for and verifying item code 
-
-
 button.onclick = verifyItemCode;
 
-
+//*(F) asks for and verifying item code is inside database
 function verifyItemCode() {
+    //converts list of objects to list of arrays that contain the item properties
+    const listOfItemProperties = items.map((item) => Object.values(item));
     let requestValid = false;
+
 
     while (!requestValid) {
         let userInput = prompt("Enter the ITEM CODE of what you would like to have").toUpperCase();
+        console.log(userInput);
 
-        for (let item of items) {
-            if (Object.values(item).includes(userInput)) {
-                console.log("in there");
+
+        //checks each array in the list for user input and stops FOR loop when input is found
+        for (let arr of listOfItemProperties) {
+            if (arr.includes(userInput)) {
                 requestValid = true;
-                break;
-            } else {
-                alert("Item invalid. Try again.");
-                break;
+                console.log("for loop broken as item code has been found");
+
+                //passing array (containing properties) to function that verifies payment
+                return collectAndVerifyPayment(arr);
             }
         };
+
+        //determines whether loop should be broken or continue running 
+        if (requestValid) {
+            console.log("while loop broken");
+            break;
+        } else {
+            alert("Enter the correct item code 🙄");
+        }
+
+
     }
 }
+
+
+function collectAndVerifyPayment(itemValuesArr) {
+    const dialog = document.createElement("dialog");
+    document.body.appendChild(dialog);
+    displayOptions();
+    displayFormAndHandlePayment();
+
+    //!function that displays options
+    function displayOptions() {
+        const options = {
+            "Item Name": itemValuesArr[1],
+            "Item Price": `£${itemValuesArr[2]}`,
+            "No. Left In Stock": itemValuesArr[3]
+        }
+
+        const dataToDisplay = Object.entries(options);
+        console.log(dataToDisplay);
+
+        dataToDisplay.forEach((array) => {
+
+            //creates and adds heading 
+            const heading = document.createElement("h2");
+            dialog.appendChild(heading);
+            heading.innerText = array[0]; //populates the h2 with the heading name
+
+            //creates and adds paragraph 
+            const p = document.createElement("p");
+            dialog.appendChild(p);
+            p.innerText = array[1]; //populates the p with the associated data
+        });
+    }
+
+    //!function that displays payment form and handles payment
+    function displayFormAndHandlePayment() {
+
+        //@!DISPLAYING THE FORM
+        //todo: make this its own dang function!
+        const form = document.createElement("form");
+        dialog.appendChild(form);
+
+        const label = document.createElement("label");
+        form.appendChild(label);
+        label.innerText = "Your payment (just type in the price): ";
+
+        const input = document.createElement("input");
+        form.appendChild(input);
+
+
+        const payBtn = document.createElement("button");
+        payBtn.setAttribute("type", "submit");
+        form.appendChild(payBtn);
+        payBtn.innerText = "Pay"
+        payBtn.style.margin = "0 10px";
+
+
+        const closeBtn = document.createElement("button");
+        closeBtn.setAttribute("type", "button");
+        form.appendChild(closeBtn);
+        closeBtn.innerText = "Go back";
+
+        closeBtn.onclick = function () {
+            dialog.close();
+        }
+
+        //@!HANDLING PAYMENT
+
+
+    }
+
+
+    dialog.showModal();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
