@@ -90,8 +90,10 @@ button.innerText = "Get food";
 
 button.onclick = verifyItemCode;
 
-//*(F) asks for and verifying item code is inside database
+//*(F) asks for and verifies item code inside database
 function verifyItemCode() {
+    localStorage.setItem("paidSoFar", 0); //setting how much has been paid to 0 in local storage
+
     //converts list of objects to list of arrays that contain the item properties
     const listOfItemProperties = items.map((item) => Object.values(item));
     let requestValid = false;
@@ -127,8 +129,12 @@ function verifyItemCode() {
 
 
 function collectAndVerifyPayment(itemValuesArr) {
+
+
+    //@!DISPLAYING THE DIALOG BOX
     const dialog = document.createElement("dialog");
     document.body.appendChild(dialog);
+
     displayOptions();
     displayFormAndHandlePayment();
 
@@ -162,41 +168,98 @@ function collectAndVerifyPayment(itemValuesArr) {
 
         //@!DISPLAYING THE FORM
         //todo: make this its own dang function!
-        const form = document.createElement("form");
-        dialog.appendChild(form);
+        const paymentForm = document.createElement("form");
+        dialog.appendChild(paymentForm);
 
         const label = document.createElement("label");
-        form.appendChild(label);
+        paymentForm.appendChild(label);
         label.innerText = "Your payment (just type in the price): ";
 
         const input = document.createElement("input");
-        form.appendChild(input);
+        paymentForm.appendChild(input);
 
 
         const payBtn = document.createElement("button");
         payBtn.setAttribute("type", "submit");
-        form.appendChild(payBtn);
+        paymentForm.appendChild(payBtn);
         payBtn.innerText = "Pay"
         payBtn.style.margin = "0 10px";
 
 
         const closeBtn = document.createElement("button");
         closeBtn.setAttribute("type", "button");
-        form.appendChild(closeBtn);
+        paymentForm.appendChild(closeBtn);
         closeBtn.innerText = "Go back";
 
-        closeBtn.onclick = function () {
-            dialog.close();
-        }
 
         //@!HANDLING PAYMENT
+        //todo: put in a function if necessary
+
+        const originalPrice = itemValuesArr[2];
+
+
+        paymentForm.onsubmit = function (event) {
+            event.preventDefault();
+
+            const userInput = parseInt(input.value);
+            let paymentValid = false;
+
+            //"paidSoFar" in local storage is 0
+            const paidSoFar = parseInt(localStorage.getItem("paidSoFar")) + userInput;
+            localStorage.setItem("paidSoFar", paidSoFar); //storing how much has been paid so far inside local storage
+
+            if (originalPrice < paidSoFar) {
+                const change = paidSoFar - originalPrice;
+                alert(`You overpaid. Your change is £${change}`);
+                paymentValid = true;
+                removeDialogue();
+            } else if (originalPrice > paidSoFar) {
+                const owed = originalPrice - paidSoFar;
+                alert(`You underpaid. You still owe £${owed}`);
+            } else {
+                paymentValid = true;
+                removeDialogue();
+            }
+
+            //todo: once you remember, move it back into the onsubmit event listener
+            function removeDialogue() {
+                dialog.close();
+                document.body.removeChild(dialog);
+                localStorage.clear();
+
+                // if (paymentValid) {
+
+                // }
+            }
+
+            input.value = ""; //clears the form after it's submitted
+
+        }
+
+        //close button to close the popup and remove it from the screen
+        closeBtn.onclick = removeDialogue;
+
+        function removeDialogue() {
+            dialog.close();
+            document.body.removeChild(dialog);
+            localStorage.clear();
+        }
+
+        dialog.showModal();
+
+
+
+
 
 
     }
 
 
-    dialog.showModal();
 }
+
+
+
+
 
 
 
