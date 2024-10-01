@@ -15,7 +15,6 @@ export function collectAndVerifyItemCode() {
     let requestValid = false;
 
     while (!requestValid) {
-        //todo: 
         let userInput = prompt("Enter the ITEM CODE of what you would like to have").toUpperCase();
 
         //checks if the item code that the user input is inside any of the arrays in "ListOfItemProperties", and stops the FOR loop when it's found
@@ -24,9 +23,9 @@ export function collectAndVerifyItemCode() {
             if (itemValuesArr.includes(userInput)) {
                 requestValid = true;
                 const indexOfArray = listOfItemsValues.indexOf(itemValuesArr);
-                const itemCode = itemValuesArr[0];
                 console.log("for loop broken as item code has been found inside array");
 
+                localStorage.setItem("ItemCode", itemValuesArr[0]);
                 localStorage.setItem("ItemName", itemValuesArr[1]);
                 localStorage.setItem("ItemPrice", itemValuesArr[2]);
                 localStorage.setItem("IndexOfArray", indexOfArray);

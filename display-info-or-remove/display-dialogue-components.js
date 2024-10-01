@@ -5,9 +5,11 @@
 export function displayItemInfo(dialog) {
     //iterates over item property, creates an html element for it and populates it
 
+    const itemCodeInLocalStorage = localStorage.getItem("ItemCode");
     const itemNameInLocalStorage = localStorage.getItem("ItemName");
     const itemPriceInLocalStorage = parseInt(localStorage.getItem("ItemPrice"));
-    const stockInLocalStorage = parseInt(localStorage.getItem("LeftInStock"));
+
+    const stockInLocalStorage = parseInt(localStorage.getItem(itemCodeInLocalStorage));
 
     const itemsDataObj = {
         "Item Name": itemNameInLocalStorage,
