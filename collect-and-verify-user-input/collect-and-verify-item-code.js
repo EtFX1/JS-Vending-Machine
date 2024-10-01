@@ -32,21 +32,23 @@ export function collectAndVerifyItemCode() {
                 localStorage.setItem("IndexOfArray", indexOfArray);
 
                 //!Verification of payment
-                handlePayment();
+                return handlePayment();
 
                 // debugger
 
-                //@!CALCULATING STOCK
-                //todo: put in a function 
-                const currentStock = parseInt(localStorage.getItem(itemCode));
-                const newStock = currentStock - 1;
+                // //@!CALCULATING STOCK
+                // //todo: put in a function 
+                // debugger;
+                // const currentStock = parseInt(localStorage.getItem(itemCode));
+                // const newStock = currentStock - 1;
 
-                const itemIndex = parseInt(localStorage.getItem("IndexOfArray"));
-                const classListOfStockElements = document.getElementsByClassName("q-in-stock");
+                // const itemIndex = parseInt(localStorage.getItem("IndexOfArray"));
+                // const classListOfStockElements = document.getElementsByClassName("q-in-stock");
 
-                classListOfStockElements[itemIndex].innerText = newStock;
+                // classListOfStockElements[itemIndex].innerText = newStock;
 
-                localStorage.setItem(itemCode, newStock);
+                // localStorage.setItem(itemCode, newStock);
+
             }
         };
 

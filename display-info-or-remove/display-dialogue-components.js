@@ -1,10 +1,8 @@
-import { dialog } from "../collect-and-verify-user-input/handle-payment.js";
-
 //?CONTAIN FUNCTIONS THAT DISPLAY THE ITEM INFORMATION (AS HEADERS AND PARAGRAPHS) AND A FORM TO COLLECT USER PAYMENT
 
 
 //!Displays the item information
-export function displayItemInfo() {
+export function displayItemInfo(dialog) {
     //iterates over item property, creates an html element for it and populates it
 
     const itemNameInLocalStorage = localStorage.getItem("ItemName");
