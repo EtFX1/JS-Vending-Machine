@@ -14,7 +14,14 @@ export function collectAndVerifyItemCode() {
     let requestValid = false;
 
     while (!requestValid) {
-        let userInput = prompt("Enter the ITEM CODE of what you would like to have").toUpperCase();
+        let userInput = prompt("Enter the ITEM CODE of what you would like to have");
+
+        if (userInput === null) {
+            alert("No input entered, please try again 😕");
+            continue;
+        } else {
+            userInput = userInput.toUpperCase();
+        }
 
         //?checks if the item code that the user input is inside any of the arrays in "ListOfItemProperties", and stops the FOR loop when it's found
 
