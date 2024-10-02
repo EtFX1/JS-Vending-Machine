@@ -1,3 +1,4 @@
+//*CODE THAT'S SHOWN ON THE HOMEPAGE
 import { displayTable } from "./display-info-or-remove/display-table.js";
 import { collectAndVerifyItemCode } from "./handle-user-input/collect-and-verify-item-code.js";
 

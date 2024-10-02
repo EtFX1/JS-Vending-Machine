@@ -1,9 +1,8 @@
-//?CONTAIN FUNCTIONS THAT DISPLAY THE ITEM INFORMATION (AS HEADERS AND PARAGRAPHS) AND A FORM TO COLLECT USER PAYMENT
+//* THIS FILE CONTAINS A FUNCTION THAT DISPLAYS THE ITEM INFO INSIDE OF THE DIALOGUE BOX
 
 
 //!Displays the item information
 export function displayItemInfo(dialog) {
-    //iterates over item property, creates an html element for it and populates it
 
     const itemCodeInLocalStorage = localStorage.getItem("ItemCode");
     const itemNameInLocalStorage = localStorage.getItem("ItemName");

@@ -1,11 +1,10 @@
-import { displayItemInfo } from "../display-info-or-remove/display-dialogue-components.js";
+//*THIS FILE CONTAINS A FUNCTION THAT VERIFIES THE PAYMENT THAT THE USER INPUTS 
 
-//?FUNCTION THAT DISPLAYS CALLS OTHER FUNCTIONS TO DISPLAY THE DIALOGUE BOX 
+import { displayItemInfo } from "../display-info-or-remove/display-dialogue-components.js";
 
 export function handlePayment() {
 
     //@!CREATING AND DISPLAYING DIALOGUE BOX
-
     //creating dialog box
     const dialog = document.createElement("dialog");
     document.body.appendChild(dialog);
@@ -43,45 +42,45 @@ export function handlePayment() {
     dialog.showModal();
 
     //!verifies payment when user clicks on "Pay" button
-    paymentForm.onsubmit =
-        //@!VERIFYING PAYMENT
-        function verifyPayment(event) {
+    paymentForm.onsubmit = verifyPayment;
 
-            event.preventDefault();
+    function verifyPayment(event) {
 
-            const originalPrice = parseInt(localStorage.getItem("ItemPrice"));
+        event.preventDefault();
 
-            const userInput = parseInt(input.value);
-            let paymentValid = false;
+        const originalPrice = parseInt(localStorage.getItem("ItemPrice"));
 
-            //"paidSoFar" in local storage is 0
-            const paidSoFar = parseInt(localStorage.getItem("paidSoFar")) + userInput;
+        const userInput = parseInt(input.value);
+        let paymentValid = false;
 
-            localStorage.setItem("paidSoFar", paidSoFar); //storing how much has been paid so far inside local storage
+        //"paidSoFar" in local storage is 0
+        const paidSoFar = parseInt(localStorage.getItem("paidSoFar")) + userInput;
 
-            if (originalPrice < paidSoFar) {
-                const change = paidSoFar - originalPrice;
-                alert(`You overpaid. Your change is £${change}`);
-                paymentValid = true;
-            } else if (originalPrice > paidSoFar) {
-                const owed = originalPrice - paidSoFar;
-                alert(`You underpaid. You still owe £${owed}`);
-            } else {
-                paymentValid = true;
-            }
+        localStorage.setItem("paidSoFar", paidSoFar); //storing how much has been paid so far inside local storage
 
-            input.value = ""; //clears the form after it's submitted
+        if (originalPrice < paidSoFar) {
+            const change = paidSoFar - originalPrice;
+            alert(`You overpaid. Your change is £${change}`);
+            paymentValid = true;
+        } else if (originalPrice > paidSoFar) {
+            const owed = originalPrice - paidSoFar;
+            alert(`You underpaid. You still owe £${owed}`);
+        } else {
+            paymentValid = true;
+        }
 
-            if (paymentValid) {
-                alert("Thank you for your purchase 😁");
-                removeDialogueBox();
-            }
-        };
+        input.value = ""; //clears the form after it's submitted
 
-    //removes dialogue box when user clicks on close button
+        if (paymentValid) {
+            alert("Thank you for your purchase 😁");
+            removeDialogueBox();
+        }
+    };
+
+
+    //!removes dialogue box when user clicks on "Go back" button
     closeBtn.onclick = removeDialogueBox;
 
-    //!removes the dialogue box
     function removeDialogueBox() {
         dialog.close();
         // dialog.remove();
