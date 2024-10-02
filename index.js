@@ -1,5 +1,5 @@
 import { displayTable } from "./display-info-or-remove/display-table.js";
-import { collectAndVerifyItemCode } from "./collect-and-verify-user-input/collect-and-verify-item-code.js";
+import { collectAndVerifyItemCode } from "./handle-user-input/collect-and-verify-item-code.js";
 
 //@!CREATING AND ADDING HEADER
 const h1 = document.createElement("h1");

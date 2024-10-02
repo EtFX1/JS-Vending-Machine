@@ -1,11 +1,11 @@
 import { items } from "../stored-data/item-objects.js";
 import { handlePayment } from "./handle-payment.js";
+import { calcStock } from "./calcStock.js";
 
 //?CONTAINS FUNCTION THAT WILL VERIFY WHETHER THE INPUT ITEM CODE IS CORRECT (and also calls function that handles payment)
 
 //asks user to input item code and verifies it (called when "get food" button is clicked)
 export function collectAndVerifyItemCode() {
-
     localStorage.setItem("paidSoFar", 0); //setting how much has been paid to 0 in local storage
 
     //!Verification of item code
@@ -31,23 +31,11 @@ export function collectAndVerifyItemCode() {
                 localStorage.setItem("IndexOfArray", indexOfArray);
 
                 //!Verification of payment
-                return handlePayment();
+                handlePayment();
 
-                // debugger
-
-                // //@!CALCULATING STOCK
-                // //todo: put in a function 
-                // debugger;
-                // const currentStock = parseInt(localStorage.getItem(itemCode));
-                // const newStock = currentStock - 1;
-
-                // const itemIndex = parseInt(localStorage.getItem("IndexOfArray"));
-                // const classListOfStockElements = document.getElementsByClassName("q-in-stock");
-
-                // classListOfStockElements[itemIndex].innerText = newStock;
-
-                // localStorage.setItem(itemCode, newStock);
-
+                //!Calculation of stock
+                calcStock();
+                break;
             }
         };
 
